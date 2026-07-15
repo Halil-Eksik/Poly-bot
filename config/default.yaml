@@ -1,0 +1,199 @@
+
+# ==============================================================================
+# Bot
+# ==============================================================================
+
+bot:
+  paper_trading: true
+  dry_run: false
+
+# ==============================================================================
+# Price Feed
+# ==============================================================================
+
+price_feed:
+  provider: chainlink
+  spot_provider: chainlink
+
+  chainlink_spot_poll_interval_s: 0.15
+
+  chainlink:
+
+    # Prefer environment variables:
+    # POLYBOT5MBES_PRICE_FEED__CHAINLINK__STREAMS_USER_ID
+    # POLYBOT5MBES_PRICE_FEED__CHAINLINK__STREAMS_SECRET
+
+    streams_user_id: "xxxxxxxxxxxxxxx"
+    streams_secret: "xxxxxxxxxxxxxxx"
+
+    feed_ids:
+      btc: "xxxxxxxxxxxxxxxxxx"
+      eth: "xxxxxxxxxxxxxxxxxx"
+
+# ==============================================================================
+# Market Monitor
+# ==============================================================================
+
+monitor:
+
+  export_dir: exports
+
+  cycles: 0
+  stagger_delay_seconds: 0
+
+  # Main polling interval
+  poll_interval_s: 0.15
+
+  # REST
+  rest_book_timeout_s: 3.0
+
+  # Balance refresh
+  balance_refresh_timeout_s: 3.0
+  balance_force_refresh_min_s: 1.0
+  balance_poll_interval_s: 2.0
+
+  # Misc
+  wave_collect_timeout_s: 3.0
+  log_interval_s: 0.15
+  verbose_seconds_before_end: 165
+  log_strike_spot_interval_s: 0.15
+
+  # Difference logging disabled (0 = off)
+  spot_minus_strike_difference_rate_lookback_s: 0
+
+  # User WebSocket
+  user_ws_enabled: true
+
+  trading_process_jsonl: exports/trading_process.jsonl
+  trading_process_log_mode: trades
+
+  redeem_enabled: false
+  redeem_delay_seconds: 150
+
+# ==============================================================================
+# Markets
+# ==============================================================================
+
+epoch: 5m
+
+symbols:
+  - btc
+  - eth
+
+# ==============================================================================
+# Entry Strategy #1 (BTC)
+# ==============================================================================
+
+buy1:
+
+  enabled: true
+
+  trigger_time_start_sec: 100
+  trigger_time_end_sec: 8
+
+  shares: 50
+
+  max_spread: 0.10
+  min_best_ask: 0.90
+  other_symbol_min_best_bid: 0.90
+
+  buy_limit_price: 0.99
+  order_type: GTC
+
+  # Spot / strike filters
+  spot_minus_strike_btc_abs_min: 45
+  averge_spot_minus_btc_abs_min: 18
+  spot_minus_strike_eth_abs_min: 1.0
+
+# ==============================================================================
+# Entry Strategy #2 (ETH)
+# ==============================================================================
+
+buy2:
+
+  enabled: true
+
+  trigger_time_start_sec: 60
+  trigger_time_end_sec: 3
+
+  monitoring_cycles: 2
+
+  shares: 5
+
+  max_spread: 0.10
+  min_best_ask: 0.90
+  other_symbol_min_best_bid: 0.90
+
+  buy_limit_price: 0.99
+  order_type: GTC
+
+  # Spot / strike filters
+  spot_minus_strike_btc_abs_min: 60
+  averge_spot_minus_btc_abs_min: 18
+  spot_minus_strike_eth_abs_min: 2.0
+
+# ==============================================================================
+# Pair completion after buy1 (BTC opposite leg)
+# ==============================================================================
+
+buy3:
+
+  enabled: true
+
+  # Trigger when first-leg fill_px + opposite best_ask < pair_sum_max
+  pair_sum_max: 0.95
+
+  # Limit buy at opposite best_ask + offset
+  opposite_buy_offset: 0.03
+
+  order_type: GTC
+
+# ==============================================================================
+# Pair completion after buy2 (ETH opposite leg)
+# ==============================================================================
+
+buy4:
+
+  enabled: true
+
+  pair_sum_max: 0.95
+  opposite_buy_offset: 0.03
+  order_type: GTC
+
+# ==============================================================================
+# Risk Management
+# ==============================================================================
+# Priority:
+#   1. Stop Loss
+#   2. Time Stop
+#   3. Dead Market Exit
+# ==============================================================================
+
+risk:
+
+  stop_loss:
+    enabled: true
+
+    loss_offset: 0.40
+    monitoring_cycles: 3
+
+    sell_offset: 0.05
+    max_sell_attempts: 5
+
+  time_stop:
+    enabled: false
+
+    hold_timeout_sec: 20
+
+    sell_offset: 0.10
+    max_sell_attempts: 54
+
+  dead_market:
+    enabled: true
+
+    bid_below: 0.42
+
+    monitoring_cycles: 4
+
+    sell_offset: 0.02
+    max_sell_attempts: 5

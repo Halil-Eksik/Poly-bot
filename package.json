@@ -1,0 +1,33 @@
+{
+  "name": "polybot5m",
+  "version": "0.3.0",
+  "description": "Polymarket BTC/ETH 5m arbitrage bot — TypeScript + CLOB V2",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js run",
+    "dev": "tsx src/cli.ts run --paper",
+    "polybot5m": "tsx src/cli.ts"
+  },
+  "bin": {
+    "polybot5m": "./dist/cli.js"
+  },
+  "dependencies": {
+    "@polymarket/clob-client-v2": "^1.0.0",
+    "polymarket-bot-logger":"^1.0.1",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "viem": "^2.23.2",
+    "ws": "^8.18.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/ws": "^8.5.14",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
