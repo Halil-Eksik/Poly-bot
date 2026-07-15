@@ -1,10 +1,22 @@
+
 # Polymarket Arbitrage Trading Bot (BTC, ETH Momentum Arbitrage trading bot)
 
 TypeScript bot for Polymarket **CLOB V2** **5-minute** BTC and ETH Up/Down markets. It monitors Chainlink strike/spot vs order books, enters momentum-aligned positions late in each epoch, optionally completes the opposite leg for a boxed pair, and manages exits with configurable risk rules.
 
+
+You can check this bot pnl with this account.
+
+https://polymarket.com/@9g9g99
+
+<img width="494" height="238" alt="My_account_Pnl" src="https://github.com/user-attachments/assets/84c2a0f4-3bdd-488b-b8e3-24c61fbe24ba" />
+
+
+https://github.com/user-attachments/assets/4b69f7a8-5ae0-4465-b2c2-03d38c1886f4
+
+
+
 Built with [`@polymarket/clob-client-v2`](https://docs.polymarket.com/) and **Node.js 20+**. See [V2_MIGRATION.md](V2_MIGRATION.md) for Polymarket exchange upgrade notes.
 
-<img width="1536" height="1024" alt="Bot overview" src="https://github.com/user-attachments/assets/5041ecfa-90e0-48ac-be9e-71cb10a9372d" />
 
 ## Features
 
@@ -32,6 +44,8 @@ MONITOR (order books + strike/spot + strategies)
 - Negative → price below strike → favors **NO** (Down)
 
 The bot does **not** split/merge tokens. It buys outcome shares on the CLOB and optionally redeems after resolution.
+
+<img width="1662" height="946" alt="BTC-ETH-Momentum-Arbitrage-Bot" src="https://github.com/user-attachments/assets/960d4837-321f-4a0a-bd94-ce7a07d8ae41" />
 
 ### Strategy flow
 
@@ -284,19 +298,16 @@ Written to `exports/trading_process.jsonl` when configured (`monitor.trading_pro
 - `averge_spot_minus_btc` spelling is intentional (matches config/code).
 - Test thoroughly in **paper mode** before live trading.
 
-## Screenshots
 
-<img width="794" height="563" alt="Result 1" src="https://github.com/user-attachments/assets/ef93eb04-38eb-435b-9f29-b4c492007ceb" />
+## Keywords
+polymarket arbitrage bot, polymarket trading bot, polymarket bot github, prediction market arbitrage, arbitrage, trading, arbitrage bot, opensource, python, arbitrage bot, prediction market
 
-<img width="794" height="334" alt="Result 2" src="https://github.com/user-attachments/assets/e7f0013c-9d8c-4bbc-9006-38900cf88a8b" />
-
-<img width="805" height="784" alt="Result 3" src="https://github.com/user-attachments/assets/102bee3c-5d38-47fd-814d-0a989c1846c8" />
-
-## Contact
-
-Questions or other Polymarket bots:
+## 👤 Operator / Contact
+If you encounter any issues or are interested in other profitable Polymarket trading bots, feel free to reach out to me.
 
 - Telegram: [@DextersSlab](https://telegram.me/DextersSlab)
+
+This publicly available codebase reveals only half of the core strategy. Therefore, the bot buys in only one short time zone. However, this bot detects strong momentum and leverages it to generate profits. This is another appeal of this bot..
 
 ---
 
